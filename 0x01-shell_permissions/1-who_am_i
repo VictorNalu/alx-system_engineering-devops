@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Effective username: $(if [ $(id -u) -eq 0 ]: then echo "root"; else whoami; fi)"
+whoami
