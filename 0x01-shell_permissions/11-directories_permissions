@@ -1,4 +1,2 @@
 #!/bin/bash
-for dir in $(find . -type d); do
-    chmod a+rx "$dir"
-done
+for dir in $(find . -type d); do chmod ugo+rx "$dir"; done
