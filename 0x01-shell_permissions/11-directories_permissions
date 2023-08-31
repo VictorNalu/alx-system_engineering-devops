@@ -1,2 +1,2 @@
 #!/bin/bash
-for dir in $(find . -type d); do chmod ugo+rx "$dir"; done
+chmo -R +X .
