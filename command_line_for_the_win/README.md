@@ -11,6 +11,6 @@ This is how I used SFTP to move the images from my local machine:
 
 2. I created the directories.
 
-3. Then, I used the 'put' command to move the images from my local machine to the remote server.
+3. Then, I used the 'put "filename"' command to move the images from my local machine to the remote server.
 
 4. I also installed a VSCODE SFTP extension that I could use to view the files in the directory in real time.
