@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Bash script to listen on port 98 on localhost
+
+# Explanation of flags/options:
+# - nc: Netcat command.
+# - -l: Listen mode, for inbound connections.
+# - -p 98: Specifies the port number (98) to listen on.
+
+# Listen on port 98 on localhost
+nc -l -p 98

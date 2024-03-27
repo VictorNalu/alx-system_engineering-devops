@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Bash script to display all active IPv4 IPs on the machine
+
+# Use ifconfig to get the list of active interfaces and their IPs
+# Filter out only the lines containing "inet" (IPv4)
+#+ and extract the IP addresses
+# Remove the loopback address (127.0.0.1) as it is not
+#+ considered an attached IP
+
+# Explanation of the command:
+# - ifconfig: Retrieves information about network interfaces on the machine.
+# - grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*":
+#   - Uses grep with an extended regular expression to match
+#+ and extract IPv4 addresses.
+#   - "inet (addr:)?" matches the string "inet" with an optional
+# "addr:" prefix.
+#   - "([0-9]*\.){3}[0-9]*" matches the actual IPv4 address using
+# a capturing group.
+#   - -E: Enables extended regular expressions.
+#   - -o: Prints only the matching parts of the lines.
+# - cut -b 6-:
+#   - Cuts the output starting from the 6th character to remove
+# the "inet " or "inet addr:" prefix.
+
+ifconfig | grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" | cut -b 6-
