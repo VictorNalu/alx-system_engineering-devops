@@ -1,0 +1,34 @@
+ https://imgur.com/a/PDyEgVa
+
+## Explanation
+Server 1:
+Hosts the web server component.
+Responsible for serving web content to clients.
+
+Server 2:
+Hosts the application server component.
+Responsible for executing the business logic of the application.
+
+Server 3:
+Hosts the database component.
+Stores and manages the application data.
+
+Load Balancer (HAProxy):
+Configured as a cluster with another load balancer for high availability.
+Distributes incoming traffic across the web server and application server components for load balancing and redundancy.
+
+### Explanation:
+
+Web Server Component:
+Separating the web server component allows for specialized configuration and optimization for serving static content (HTML, CSS, JavaScript, images, etc.) to clients.
+
+Application Server Component:
+Separating the application server component allows for dedicated execution of the application's business logic and processing dynamic requests from clients.
+
+Database Component:
+Separating the database component ensures data isolation and dedicated resources for storing and managing application data, enhancing data security and performance.
+
+Load Balancer (HAProxy):
+The load balancer distributes incoming traffic across multiple servers hosting the web and application components, improving performance, scalability, and fault tolerance.
+Configuring HAProxy as a cluster with another load balancer ensures high availability by providing redundancy and failover capabilities. If one load balancer fails, the other one can continue serving traffic seamlessly.
+This infrastructure design achieves a scalable, fault-tolerant, and high-performing architecture by distributing components across multiple servers and utilizing load balancing for traffic distribution and redundancy.
