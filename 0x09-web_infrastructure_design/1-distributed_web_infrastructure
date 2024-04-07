@@ -1,1 +1,36 @@
 https://imgur.com/a/vuGdJnn
+
+## Explanation
+
+Explanation:
+
+Why Add Load Balancer:
+Adding a load balancer ensures high availability and scalability by distributing incoming traffic across multiple servers. It helps in handling a large number of concurrent requests and prevents overload on individual servers.
+
+Distribution Algorithm:
+HAProxy is configured with a round-robin distribution algorithm. This algorithm simply rotates through the list of servers and forwards each new request to the next server in line. It evenly distributes the traffic load across all servers in the pool.
+
+Active-Active vs. Active-Passive:
+The load balancer enables an Active-Active setup where both application servers are actively serving traffic simultaneously. In Active-Passive setup, one server remains idle until the active server fails, causing a delay in response time during failover.
+Database Primary-Replica Cluster:
+
+The MySQL database is configured in a Primary-Replica (Master-Slave) cluster setup.
+The Primary node (Master) handles all write operations and replicates data changes to the Replica nodes (Slaves).
+The Replica nodes are read-only copies of the data and serve read requests, offloading the read workload from the Primary node.
+
+Difference Between Primary and Replica Nodes:
+The Primary node handles write operations, ensuring data consistency and integrity.
+The Replica nodes serve read operations, improving read scalability and performance. They also provide redundancy in case the Primary node fails.
+
+Issues:
+
+Single Points of Failure (SPOFs):
+The infrastructure still has SPOFs, primarily with the single load balancer. If the load balancer fails, it can disrupt traffic distribution.
+Lack of redundancy in the database setup can also pose a single point of failure. If the Primary node fails without a proper failover mechanism, the database becomes inaccessible.
+
+Security Issues:
+Lack of firewall configuration leaves the servers vulnerable to unauthorized access or malicious attacks.
+Absence of HTTPS encryption exposes sensitive data to interception during transmission over the network.
+
+No Monitoring:
+Without monitoring tools and practices in place, it becomes challenging to detect and respond to performance issues, downtime, or security breaches promptly.

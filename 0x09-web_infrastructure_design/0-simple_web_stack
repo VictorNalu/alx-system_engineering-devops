@@ -1,1 +1,26 @@
 https://imgur.com/a/ocD1xH5
+
+## Explanation
+
+Explanation:
+What is a server?: A server is a computer or a software system that provides services or resources to other computers or users over a network.
+
+What is the role of the domain name?: The domain name is a human-readable address that maps to a specific IP address. It helps users access websites without needing to remember the complex numerical IP addresses.
+
+What type of DNS record is www in www.foobar.com?: The www in www.foobar.com is a subdomain, and it typically corresponds to an A record in DNS (Address record) that points to the server's IP address.
+
+What is the role of the web server?: The web server (Nginx) handles incoming HTTP requests from clients, serves static content, and forwards dynamic requests to the application server for processing.
+
+What is the role of the application server?: The application server executes the application logic, processes dynamic requests from clients, interacts with the database to fetch or store data, and generates dynamic content to be sent back to the client.
+
+What is the role of the database?: The database (MySQL) stores and manages the website's data. It allows for efficient storage, retrieval, and manipulation of structured data required by the application.
+
+What is the server using to communicate with the computer of the user requesting the website?: The server communicates with the user's computer over the internet using the HTTP (Hypertext Transfer Protocol) protocol. This protocol defines how messages are formatted and transmitted, and how web servers and browsers should respond to various commands.
+
+Issues:
+
+Single Point of Failure (SPOF): Since all components are hosted on a single server, any failure in hardware, software, or network connectivity can lead to the entire website becoming inaccessible.
+
+Downtime during maintenance: Performing maintenance tasks such as deploying new code or updating software components requires taking the web server offline, resulting in downtime for the website.
+
+Scalability: This infrastructure may struggle to handle a sudden increase in incoming traffic. Scaling horizontally by adding more servers or vertically by upgrading hardware becomes challenging due to the tightly coupled nature of components on a single server.

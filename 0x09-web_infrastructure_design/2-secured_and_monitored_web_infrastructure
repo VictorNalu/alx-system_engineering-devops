@@ -1,1 +1,24 @@
 https://imgur.com/a/Fdbai9s
+
+## Explanation
+
+Specifics Explanation:
+
+Firewalls: Each server will be equipped with a firewall to control incoming and outgoing network traffic. Firewalls add an extra layer of security by filtering traffic based on predefined rules, preventing unauthorized access and potential cyber attacks.
+
+HTTPS Traffic: HTTPS encrypts data transmitted between the web server and the client, ensuring confidentiality and integrity. It protects sensitive information such as passwords, credit card numbers, and personal data from being intercepted or tampered with by malicious actors during transit.
+
+Monitoring: Monitoring is crucial for ensuring the health, performance, and security of the infrastructure. Monitoring tools collect and analyze various metrics, logs, and events from servers, applications, and network devices to detect issues, troubleshoot problems, and optimize performance.
+
+Data Collection: Monitoring clients such as Sumo Logic collect data from servers, applications, and network devices using agents or collectors installed on each server. These collectors gather metrics, logs, and events and send them to the monitoring platform for analysis and visualization.
+
+Monitoring QPS: To monitor web server QPS (Queries Per Second), you would configure the monitoring tool to collect metrics related to incoming HTTP requests and analyze them over time. This could involve monitoring web server logs, HTTP status codes, and request/response times.
+
+Issues with the Infrastructure:
+
+Terminating SSL at Load Balancer: Terminating SSL at the load balancer can be a security issue as it exposes decrypted traffic within the internal network. If the load balancer is compromised, attackers could intercept sensitive data transmitted between the load balancer and the servers.
+
+Single MySQL Server for Writes: Having only one MySQL server capable of accepting writes introduces a single point of failure. If the MySQL server fails, it can lead to downtime and data loss, affecting the availability and reliability of the website.
+
+Uniform Servers Components: Having servers with identical components (database, web server, and application server) can be problematic for scalability and fault tolerance. It may limit the flexibility to scale different components independently based on their resource requirements and load patterns.
+
