@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script installs and configures the NGINX web server for redirection
+# This script installs and configures the NGINX web server
 
 # Update package lists
 apt-get update
@@ -13,20 +13,5 @@ sed -i 's/# server_names_hash_bucket_size 64;/server_names_hash_bucket_size 64;/
 # Create a default index.html file with "Hello World!"
 echo "Hello World!" > /var/www/html/index.html
 
-# Configure redirection
-cat << EOF > /etc/nginx/sites-available/redirect_me
-server {
-    listen 80;
-    server_name _;
-    return 301 https://example.com/new_page$request_uri;
-}
-EOF
-
-# Create a symbolic link to enable the site
-ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
-
-# Test Nginx configuration
-nginx -t
-
-# Restart Nginx to apply changes
-sudo service nginx restart
+# Start Nginx
+service nginx start
