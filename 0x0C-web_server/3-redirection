@@ -2,8 +2,8 @@
 # Script to configure Nginx server to redirect /redirect_me
 
 # Update package index and install Nginx
-sudo apt-get update
-sudo apt-get install -y nginx
+apt-get update
+apt-get -y install nginx
 
 # Define the new site URL and the string for replacement
 new_site="www.bible.com/videos"
@@ -13,4 +13,4 @@ replacement="location /redirect_me {\n\treturn 301 https:\/\/$new_site;\n}"
 sudo sed -i "/^\s*server\s*{[^}]*$/a $replacement" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the configuration changes
-sudo service nginx restart
+service nginx restart
