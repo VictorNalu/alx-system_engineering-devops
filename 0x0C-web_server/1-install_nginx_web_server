@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# This script installs and configures the NGINX web server
+
+# Update package lists
+apt-get update
+
+# Install Nginx
+apt-get -y install nginx
+
+# Ensure Nginx is listening on port 80
+sed -i 's/# server_names_hash_bucket_size 64;/server_names_hash_bucket_size 64;/' /etc/nginx/nginx.conf
+
+# Create a default index.html file with "Hello World!"
+echo "Hello World!" > /var/www/html/index.html
+
+# Start Nginx
+service nginx start
