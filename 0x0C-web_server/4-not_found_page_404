@@ -1,48 +1,27 @@
 #!/usr/bin/env bash
-# This script configures Nginx to have a custom 404 page
+# Configure NGINX to have custum 404 error message
 
-# Update package lists
-apt-get update
+# Update package index and install Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
 
-# Install Nginx
-apt-get -y install nginx
+# Create a basic index.html page with "Hello World!" content
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Ensure Nginx is listening on port 80
-sed -i 's/# server_names_hash_bucket_size 64;/server_names_hash_bucket_size 64;/' /etc/nginx/nginx.conf
+# Create the content for the custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-# Create a default index.html file with "Hello World!"
-echo "Hello World!" > /var/www/html/index.html
+# Construct the configuration string for the custom 404 page and error redirect
+error_config="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 
-# Create a custom 404 page with the specified content
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+# Modify the Nginx configuration file to include the error_page and location directives for the 404.html file
+sudo sed -i "s/listen 80 default_server;/$error_config/" /etc/nginx/sites-enabled/default
 
-# Configure Nginx to use the custom 404 page
-cat << EOF > /etc/nginx/sites-available/not_found_page_404
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+# Configure a redirect for error 404 to the YouTube site
+redirect_config="server_name _;\n\terror_page 404 =301 https:\/\/www.youtube.com\/@naturethrillers\/videos;"
 
-    root /var/www/html;
-    index index.html;
+# Modify the Nginx configuration file to include the redirect configuration
+sudo sed -i "s/server_name _;/$redirect_config/" /etc/nginx/sites-enabled/default
 
-    server_name _;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    error_page 404 /404.html;
-    location = /404.html {
-        internal;
-    }
-}
-EOF
-
-# Enable the site
-ln -s /etc/nginx/sites-available/not_found_page_404 /etc/nginx/sites-enabled/
-
-# Test Nginx configuration
-nginx -t
-
-# Restart Nginx to apply changes
-systemctl restart nginx
+# Restart the Nginx server to apply the changes
+sudo service nginx restart
