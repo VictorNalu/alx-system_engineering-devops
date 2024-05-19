@@ -69,6 +69,9 @@ listen stats
     stats auth admin:password
 EOF
 
+# enable haproxy to be started by init script
+echo "ENABLED=1" | sudo tee -a /etc/haproxy/haproxy.cfg
+
 # Test HAProxy configuration for syntax errors
 if sudo haproxy -c -f /etc/haproxy/haproxy.cfg; then
   # Restart HAProxy to apply the new configuration
