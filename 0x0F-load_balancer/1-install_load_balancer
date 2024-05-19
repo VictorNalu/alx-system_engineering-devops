@@ -2,8 +2,8 @@
 # This script configures HAProxy as a load balancer for two web servers
 
 # Define the IP addresses of your web servers
-WEB_SERVER_1=54.236.25.139
-WEB_SERVER_2=100.26.175.211
+WEB_SERVER_1="54.236.25.139"
+WEB_SERVER_2="100.26.175.211"
 
 # Update package lists
 sudo apt-get update
@@ -15,7 +15,7 @@ sudo apt-get -y install haproxy
 sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
 
 # Configure HAProxy
-cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg
+cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg > /dev/null
 global
     log /dev/log    local0
     log /dev/log    local1 notice
@@ -70,9 +70,11 @@ listen stats
 EOF
 
 # Test HAProxy configuration for syntax errors
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
-
-# Restart HAProxy to apply the new configuration
-sudo systemctl restart haproxy
-
-echo "HAProxy configured as a load balancer for the two web servers."
+if sudo haproxy -c -f /etc/haproxy/haproxy.cfg; then
+  # Restart HAProxy to apply the new configuration
+  sudo systemctl restart haproxy
+  echo "HAProxy configured as a load balancer for the two web servers."
+else
+  echo "HAProxy configuration test failed."
+  exit 1
+fi
