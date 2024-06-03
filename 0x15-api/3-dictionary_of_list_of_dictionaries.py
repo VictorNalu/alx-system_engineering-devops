@@ -45,19 +45,22 @@ def export_all_to_json(employees, todos):
         todos (list): A list of dictionaries containing TODO items.
     """
     data = {}
+    # Initialize the data dictionary with all employees
     for employee in employees:
         employee_id = employee.get("id")
         username = employee.get("username")
-        tasks = [
-            {
-                "username": username,
+        data[str(employee_id)] = []
+
+    # Assign tasks to the corresponding employee
+    for todo in todos:
+        user_id = str(todo.get("userId"))
+        if user_id in data:
+            task_info = {
+                "username": data[user_id][0]["username"],
                 "task": todo.get("title"),
                 "completed": todo.get("completed"),
             }
-            for todo in todos
-            if todo.get("userId") == employee_id
-        ]
-        data[str(employee_id)] = tasks
+            data[user_id].append(task_info)
 
     filename = "todo_all_employees.json"
     with open(filename, "w") as file:
@@ -71,7 +74,7 @@ def main():
     employees = get_all_employees()
     todos = get_all_todo_lists()
     export_all_to_json(employees, todos)
-    print("Data has been exported json")
+    print("Data exported to todo_all_employees.json")
 
 
 if __name__ == "__main__":
