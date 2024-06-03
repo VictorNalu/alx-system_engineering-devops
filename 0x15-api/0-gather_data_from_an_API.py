@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-0-gather_data_from_an_API.py: A script to fetch and display an employee's TODO list progress.
+0-gather_data_from_an_API.py: A script to fetch and display an employee's
+TODO list progress.
 """
 
 import requests
@@ -58,9 +59,8 @@ def main(employee_id):
     done_tasks = [task for task in todo_list if task.get("completed")]
     done_tasks_count = len(done_tasks)
 
-    print(
-        f"Employee {employee_name} is done with tasks({done_tasks_count}/{total_tasks}):"
-    )
+    print(f"Employee {employee_name} is done with tasks({done_tasks_count}/"
+          f"{total_tasks}):")
     for task in done_tasks:
         print(f"\t {task.get('title')}")
 
