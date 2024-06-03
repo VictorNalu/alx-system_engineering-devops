@@ -83,12 +83,10 @@ if __name__ == "__main__":
         print("Usage: ./1-export_to_CSV.py <employee_id>")
         sys.exit(1)
 
-
-
     try:
         employee_id = int(sys.argv[1])
     except ValueError:
         print("Employee ID must be an integer.")
         sys.exit(1)
-    
+
     main(employee_id)
