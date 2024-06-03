@@ -7,75 +7,38 @@ progress in JSON format.
 import json
 import requests
 
+# Define the API endpoints
+users_url = "https://jsonplaceholder.typicode.com/users"
+todos_url = "https://jsonplaceholder.typicode.com/todos"
 
-def get_all_employees():
-    """
-    Get all employees.
+# Fetch data from the API
+users_response = requests.get(users_url)
+todos_response = requests.get(todos_url)
 
-    Returns:
-        list: A list of dictionaries containing employee data.
-    """
-    url = "https://jsonplaceholder.typicode.com/users"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    return []
+# Parse the JSON responses
+users = users_response.json()
+todos = todos_response.json()
 
+# Create a dictionary to hold the tasks for each user
+all_tasks = {}
 
-def get_all_todo_lists():
-    """
-    Get all TODO lists.
-
-    Returns:
-        list: A list of dictionaries containing TODO items.
-    """
-    url = "https://jsonplaceholder.typicode.com/todos"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    return []
-
-
-def export_all_to_json(employees, todos):
-    """
-    Export all employees' TODO lists to a JSON file.
-
-    Args:
-        employees (list): A list of dictionaries containing employee data.
-        todos (list): A list of dictionaries containing TODO items.
-    """
-    data = {}
-    # Initialize the data dictionary with all employees
-    for employee in employees:
-        employee_id = employee.get("id")
-        username = employee.get("username")
-        data[str(employee_id)] = []
-
-    # Assign tasks to the corresponding employee
-    for todo in todos:
-        user_id = str(todo.get("userId"))
-        if user_id in data:
+# Process the data
+for user in users:
+    user_id = user["id"]
+    username = user["username"]
+    user_tasks = []
+    for task in todos:
+        if task["userId"] == user_id:
             task_info = {
-                "username": data[user_id][0]["username"],
-                "task": todo.get("title"),
-                "completed": todo.get("completed"),
+                "username": username,
+                "task": task["title"],
+                "completed": task["completed"],
             }
-            data[user_id].append(task_info)
+            user_tasks.append(task_info)
+    all_tasks[user_id] = user_tasks
 
-    filename = "todo_all_employees.json"
-    with open(filename, "w") as file:
-        json.dump(data, file)
+# Export the data to a JSON file
+with open("todo_all_employees.json", "w") as json_file:
+    json.dump(all_tasks, json_file, indent=4)
 
-
-def main():
-    """
-    Main function to fetch and export all employees' TODO list progress.
-    """
-    employees = get_all_employees()
-    todos = get_all_todo_lists()
-    export_all_to_json(employees, todos)
-    print("Data exported to todo_all_employees.json")
-
-
-if __name__ == "__main__":
-    main()
+print("Data has been exported to todo_all_employees.json")
