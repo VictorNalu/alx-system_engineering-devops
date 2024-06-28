@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Function to gracefully restart Gunicorn workers
+reload_gunicorn() {
+    # Count the number of Gunicorn processes
+    num_workers=$(pgrep -c -f "gunicorn")
+
+    if [ $num_workers -eq 0 ]; then
+        echo "No Gunicorn processes found."
+        exit 1
+    fi
+
+    echo "Reloading Gunicorn workers gracefully..."
+
+    # Iterate through each Gunicorn process and restart them
+    pids=$(pgrep -f "gunicorn")
+
+    for pid in $pids; do
+        echo "Stopping worker $pid..."
+        kill -s TERM $pid
+        # Wait for the worker to shut down gracefully
+        while ps -p $pid > /dev/null; do sleep 1; done
+        echo "Worker $pid stopped."
+    done
+
+    echo "All workers stopped. Starting new workers..."
+
+    # Start Gunicorn again with your desired command
+    # Example command: /home/user/project/venv/bin/gunicorn --bind 0.0.0.0:8000 --workers 4 app:app
+    # Replace this with your actual Gunicorn command
+    # /path/to/gunicorn_command --bind your_bind_address --workers your_worker_count your_app_module:your_app_variable
+
+    # For demonstration, a sleep command is used instead of starting Gunicorn
+    sleep 5
+
+    echo "New workers started. Gunicorn reload complete."
+}
+
+# Execute the function to reload Gunicorn
+reload_gunicorn
