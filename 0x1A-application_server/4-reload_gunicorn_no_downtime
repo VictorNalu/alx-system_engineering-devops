@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
+
 # Function to gracefully restart Gunicorn workers
 reload_gunicorn() {
     # Count the number of Gunicorn processes
     num_workers=$(pgrep -c -f "gunicorn")
 
-    if [ $num_workers -eq 0 ]; then
+    if [ "$num_workers" -eq 0 ]; then
         echo "No Gunicorn processes found."
         exit 1
     fi
@@ -16,9 +17,9 @@ reload_gunicorn() {
 
     for pid in $pids; do
         echo "Stopping worker $pid..."
-        kill -s TERM $pid
+        kill -s TERM "$pid"
         # Wait for the worker to shut down gracefully
-        while ps -p $pid > /dev/null; do sleep 1; done
+        while ps -p "$pid" > /dev/null; do sleep 1; done
         echo "Worker $pid stopped."
     done
 
@@ -36,4 +37,4 @@ reload_gunicorn() {
 }
 
 # Execute the function to reload Gunicorn
-reload_gunicorn
+reload_gunicorn "$@"
